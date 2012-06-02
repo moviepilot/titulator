@@ -20,8 +20,11 @@ module Titulator
     end
 
     def osdb_search(lang, imdb_id)
+      raise ArgumentError, 'no language given' if lang.nil?
+      raise ArgumentError, 'invalid imdb_id' if imdb_id.nil?
       osdb   = OSDb::Server.new @config.opensubtitles_api
       token  = osdb.login
+      lang   = lang.to_s
       lang   = if lang.size == 3 then lang else ISO_639.find(lang)[0] end
       begin
         result = osdb.search_subtitles imdbid: imdb_id, sublanguageid: lang, token: token
@@ -32,8 +35,24 @@ module Titulator
       end
     end
 
-    def load_osdb(osdb)
+    def osdb_find_set(lang, imdb_id)
+      osdb_select_set osdb_search(lang, imdb_id)
+    end
 
+    # Example:
+    #   cands=f.osdb_find_set(:en, 499549)
+    #
+    def osdb_select_set(cands)
+      raise ArgumentError, 'Invalid candidate set' if cands.size == 0
+      cands[0..cands.first.raw_data['SubSumCD'].to_i - 1]
+    end
+
+    def osdb_load_subtitles(cands)
+      cands.map do |cand|
+        content = Net::HTTP.get_response(cand.url).body
+        gz_body = Zlib::GzipReader.new StringIO.new(content), external_encoding: content.encoding
+        Parser.parse cand.format.chomp.downcase.to_sym, gz_body.read
+      end
     end
   end
 

@@ -1,16 +1,19 @@
 require 'titulator/version'
 
 require 'pry'
+require 'rdoc'
 require 'imdb'
-require 'singleton'
 require 'osdb'
 require 'iso-639'
+require 'singleton'
+require 'bin_search'
 
 module Titulator
 
   def self.files
     f = []
     f << 'titulator/config'
+    f << 'titulator/parse'
     f << 'titulator/fetch'
     f
   end
