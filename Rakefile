@@ -36,3 +36,7 @@ end
 task :pry => :console
 task :docs => :doc
 task :specs => :spec
+
+task :default => [:spec, :doc] do
+  puts 'Finished running specs and building docs.  Run rake console to enter an interactive shell.'
+end
