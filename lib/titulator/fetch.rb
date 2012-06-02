@@ -11,8 +11,16 @@ module Titulator
       Imdb::Search.new(query).movies
     end
 
+    def imdb_movie(query)
+      if query.size == 0 then nil else imdb_movies(query)[0] end
+    end
+
+    def imdb_movie_by_id(id)
+      Imdb::Movie.new(id)
+    end
+
     def imdb_movie_id(query)
-      if query.size == 0 then nil else imdb_movies(query)[0].id end
+      imdb_movie(query).id rescue nil
     end
 
     def osdb_info
@@ -63,6 +71,7 @@ module Titulator
     private
 
     def osdb_select_set(cands)
+      cands = cands.select { |c| c.raw_data['SubFormat'] == 'srt' }
       raise ArgumentError, 'Invalid candidate set' if cands.size == 0
       cands[0..cands.first.raw_data['SubSumCD'].to_i - 1]
     end

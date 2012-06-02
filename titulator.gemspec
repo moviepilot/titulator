@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Titulator::VERSION
   s.authors     = ['Stefan Plantikow']
   s.email       = ['stefanp@moviepilot.com']
-  s.homepage    = ''
+  s.homepage    = 'https://github.com/moviepilot/titulator'
   s.summary     = %q{movie subtitle fetcher}
   s.description = %q{Fetch movie subtitles and compare movies according to their language}
 
@@ -28,9 +28,13 @@ Gem::Specification.new do |s|
   end
 
   s.add_runtime_dependency 'pry'
+  s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'imdb'
   s.add_runtime_dependency 'osdb'
+  s.add_runtime_dependency 'rack'
+  s.add_runtime_dependency 'rack-cache'
+  s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'iso-639'
   s.add_runtime_dependency 'bin_search'
 end

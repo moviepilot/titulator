@@ -30,6 +30,22 @@ module Titulator
     def -(milliTime)
       Caption.new(start-milliTime, stop-milliTime, text)
     end
+
+    def to_json(*a)
+      result = {}
+      result[:start] = start
+      result[:stop]  = stop
+      result[:text]  = Iconv.conv('utf-8//ignore', 'utf-8', text)
+      result.to_json(*a)
+    end
+
+    def grep(expr)
+      text.downcase.include? expr.downcase
+    end
+
+    def match(expr)
+      text.match expr
+    end
   end
 
   class MilliTime
@@ -56,6 +72,10 @@ module Titulator
       sec_s      = fixed_size_num_str 2, sec
       msec_s     = fixed_size_num_str 3, msec
       "#{hrs_s}:#{min_s}:#{sec_s},#{msec_s}"
+    end
+
+    def to_json(*a)
+      to_s.to_json(*a)
     end
 
     def ==(other)
