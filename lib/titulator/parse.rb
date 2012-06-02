@@ -4,10 +4,94 @@ module Titulator
     attr_reader :start, :stop, :text
 
     def initialize(start, stop, text)
+      raise ArgumentError if (start <=> stop) == +1
+
       @start = start
       @stop  = stop
       @text  = text
     end
+
+    def ==(other)
+      start == other.start && stop == other.stop && text == other.text
+    end
+
+    def duration
+      stop - start
+    end
+
+    def <=>(other)
+      start <=> other.start
+    end
+
+    def +(milliTime)
+      Caption.new(start+milliTime, stop+milliTime, text)
+    end
+
+    def -(milliTime)
+      Caption.new(start-milliTime, stop-milliTime, text)
+    end
+  end
+
+  class MilliTime
+    attr_reader :millis
+
+    def initialize(millis)
+      raise ArgumentError if millis < 0
+      @millis = millis
+    end
+
+    def to_i ; millis end
+
+    def to_s
+      remaining  = millis
+      remaining -= (msec = remaining % 1000)
+      remaining /= 1000
+      remaining -= (sec = remaining % 60)
+      remaining /= 60
+      remaining -= (min = remaining % 60)
+      remaining /= 60
+      hrs        = remaining
+      hrs_s      = fixed_size_num_str 2, hrs
+      min_s      = fixed_size_num_str 2, min
+      sec_s      = fixed_size_num_str 2, sec
+      msec_s     = fixed_size_num_str 3, msec
+      "#{hrs_s}:#{min_s}:#{sec_s},#{msec_s}"
+    end
+
+    def ==(other)
+      (self <=> other) == 0
+    end
+
+    def <=>(other)
+      millis <=> other.millis
+    end
+
+    def -(other)
+      MilliTime.new(millis-other.millis)
+    end
+
+    def +(other)
+      MilliTime.new(millis+other.millis)
+    end
+
+    def fixed_size_num_str(size, num)
+      num_s   = num.to_s
+      missing = size - num_s.size
+      missing = 0 if missing < 1
+      "#{'0'*missing}#{num_s}"
+    end
+
+    def self.from_parts(hrs, min, sec, msec)
+      MilliTime.new ((((((hrs*60)+min)*60)+sec)*1000)+msec)
+    end
+
+    def self.parse(time_str)
+      front, msec   = time_str.split ','
+      hrs, min, sec = front.split ':'
+      from_parts hrs.to_i, min.to_i, sec.to_i, msec.to_i
+    end
+
+    ZERO = MilliTime.new 0
   end
 
   class Parser
@@ -31,6 +115,10 @@ module Titulator
 
   class SrtParser < Parser
 
+    def parse_time(time_str)
+      MilliTime.parse time_str
+    end
+
     def parse_raw(raw)
       result = []
       start  = nil
@@ -51,7 +139,7 @@ module Titulator
           expect = :text
         when :text
           if line.size == 0
-            result << Caption.new(start, stop, text.join('|'))
+            result << Caption.new(parse_time(start), parse_time(stop), text.join('|'))
             text   = []
             start  = nil
             stop   = nil
