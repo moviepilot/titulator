@@ -2,11 +2,14 @@ require 'titulator/version'
 
 require 'pry'
 require 'imdb'
+require 'xmlrpc/client'
+require 'singleton'
 
 module Titulator
 
   def self.files
     f = []
+    f << 'titulator/config'
     f << 'titulator/fetch'
     f
   end
