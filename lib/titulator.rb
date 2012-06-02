@@ -22,4 +22,4 @@ module Titulator
 
 end
 
-Titulator.files.each { |f| require f }
+Titulator.files.each { |f| require_relative f }
