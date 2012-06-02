@@ -1,11 +1,19 @@
 module Titulator
 
 	class Config
-		attr_accessor :opensubtitles_uri
-
     def initialize(config = {})
-      @opensubtitles_uri = config[:opensubtitles_uri] || 'http://api.opensubtitles.org/xml-rpc'
+      default_hash = {
+        :opensubtitles_api => {
+          :host => 'api.opensubtitles.org',
+          :path => '/xml-rpc',
+          :timeout => 60,
+          :useragent => 'OS Test User Agent'
+        }
+      }
+      @config_hash = config.merge default_hash
     end
+
+    def opensubtitles_api ; @config_hash[:opensubtitles_api] end
 	end
 
   class DefaultConfig < Config

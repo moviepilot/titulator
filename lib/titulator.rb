@@ -2,8 +2,9 @@ require 'titulator/version'
 
 require 'pry'
 require 'imdb'
-require 'xmlrpc/client'
 require 'singleton'
+require 'osdb'
+require 'iso-639'
 
 module Titulator
 

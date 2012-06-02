@@ -29,4 +29,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'pry'
   s.add_runtime_dependency 'imdb'
+  s.add_runtime_dependency 'osdb'
+  s.add_runtime_dependency 'iso-639'
+  s.add_runtime_dependency 'libarchive'
 end
