@@ -1,0 +1,3 @@
+rvm --create gemset use titulator
+export RBXOPT="$RBXOPT -X19 -v"
+export JRUBY_OPTS="$JRUBY_OPTS -Xcompat.version=1.9"

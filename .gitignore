@@ -2,4 +2,5 @@
 .bundle
 Gemfile.lock
 doc
+coverage
 pkg/*
