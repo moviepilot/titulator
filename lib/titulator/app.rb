@@ -52,17 +52,17 @@ module Titulator
         merge[:num_quotes_found] = subs.size if grep || match
         subs
       end
-      status 200
       result = result[0..[result.size, limit].min] if limit > 0
       result = { result: result, title: movie.title }
       result.merge! merge
 
       # TODO make beautiful
       if html
+        status 200
         '<html></html>'
       else
         cache_control :public, :max_age => 3600
-        status 2000
+        status 200
         result.to_json
       end
     end

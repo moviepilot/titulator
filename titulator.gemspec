@@ -29,6 +29,7 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'pry'
   s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'haml'
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'imdb'
