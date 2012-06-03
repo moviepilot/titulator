@@ -7,7 +7,13 @@ rescue
   require 'json'
 end
 
-require 'pry'
+begin
+  require 'pry'
+  IRB = Pry
+rescue
+  nil
+end
+
 require 'rdoc'
 require 'imdb'
 require 'osdb'

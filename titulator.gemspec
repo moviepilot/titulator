@@ -16,11 +16,20 @@ Gem::Specification.new do |s|
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  s.require_paths = ["lib"]
+  s.require_paths = ['lib']
 
   s.add_development_dependency 'rspec'
   s.add_development_dependency 'simplecov'
   s.add_development_dependency 'yard'
+  s.add_development_dependency 'pry'
+  s.add_development_dependency 'pry-doc'
+  s.add_development_dependency 'pry-nav'
+  s.add_development_dependency 'pry-remote'
+  s.add_development_dependency 'pry-coolline'
+  s.add_development_dependency 'pry-syntax-hacks'
+  s.add_development_dependency 'pry-vterm_aliases'
+  s.add_development_dependency 'pry-stack_explorer'
+  s.add_development_dependency 'pry-exception_explorer'
 
   case RUBY_ENGINE.to_sym
     when :jruby then s.add_development_dependency 'maruku'
@@ -32,7 +41,6 @@ Gem::Specification.new do |s|
     else s.add_development_dependency 'yajl-ruby'
   end
 
-  s.add_runtime_dependency 'pry'
   s.add_runtime_dependency 'haml'
   s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'puma'
