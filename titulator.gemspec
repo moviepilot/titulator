@@ -27,18 +27,23 @@ Gem::Specification.new do |s|
     else s.add_development_dependency 'redcarpet'
   end
 
+  case RUBY_ENGINE.to_sym
+    when :jruby then s.add_development_dependency 'json'
+    else s.add_development_dependency 'yajl-ruby'
+  end
+
   s.add_runtime_dependency 'pry'
-  s.add_runtime_dependency 'json'
   s.add_runtime_dependency 'haml'
   s.add_runtime_dependency 'thin'
+  s.add_runtime_dependency 'puma'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'imdb'
   s.add_runtime_dependency 'osdb'
   s.add_runtime_dependency 'rack'
   s.add_runtime_dependency 'iso-639'
   s.add_runtime_dependency 'sinatra'
-  s.add_runtime_dependency 'sinatra'
-  s.add_runtime_dependency 'shotgun'
+  s.add_runtime_dependency 'faraday'
   s.add_runtime_dependency 'rack-cache'
   s.add_runtime_dependency 'bin_search'
+  s.add_runtime_dependency 'sinatra-contrib'
 end

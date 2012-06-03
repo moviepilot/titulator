@@ -46,6 +46,13 @@ module Titulator
     def match(expr)
       text.match expr
     end
+
+    def self.from_json(hash)
+      start = MilliTime.from_json(hash['start'])
+      stop  = MilliTime.from_json(hash['stop'])
+      text  = hash['text']
+      Caption.new start, stop, text
+    end
   end
 
   class MilliTime
@@ -109,6 +116,10 @@ module Titulator
       front, msec   = time_str.split ','
       hrs, min, sec = front.split ':'
       from_parts hrs.to_i, min.to_i, sec.to_i, msec.to_i
+    end
+
+    def self.from_json(json_str)
+      parse json_str
     end
 
     ZERO = MilliTime.new 0

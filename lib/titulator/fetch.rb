@@ -47,15 +47,19 @@ module Titulator
     #   f.osdb_subtitles(:en, 499549)
     #   f.osdb_subtitles(:en, 133093)
     #
-    def osdb_subtitles(lang, imdb_id, start = nil, stop = nil)
-      start       = MilliTime.parse(start) if start.is_a?(String)
-      start       = MilliTime.new(start) if start.is_a?(Fixnum)
-      stop        = MilliTime.parse(stop) if stop.is_a?(String)
-      stop        = MilliTime.new(stop) if stop.is_a?(Fixnum)
-      cands       = osdb_select_set osdb_search(lang, imdb_id)
-      subs        = osdb_load_subtitles cands
-      titles      = osdb_join_subtitles subs
+    def osdb_subtitles(lang, imdb_id)
+      cands  = osdb_select_set osdb_search(lang, imdb_id)
+      subs   = osdb_load_subtitles cands
+      titles = osdb_join_subtitles subs
+      titles
+    end
+
+    def osdb_select_subtitles(titles, start, stop)
       return [] if titles.size == 0
+      start  = MilliTime.parse(start) if start.is_a?(String)
+      start  = MilliTime.new(start) if start.is_a?(Fixnum)
+      stop   = MilliTime.parse(stop) if stop.is_a?(String)
+      stop   = MilliTime.new(stop) if stop.is_a?(Fixnum)
       start_index = if start
         then titles.bin_index(start, :asc) { |a, b| a <=> b.start }
         else 0 end

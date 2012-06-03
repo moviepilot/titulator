@@ -1,20 +1,29 @@
 require 'titulator/version'
 
+begin
+  require 'yajl'
+  require 'json'
+rescue
+  require 'json'
+end
+
 require 'pry'
-require 'json'
 require 'rdoc'
 require 'imdb'
 require 'osdb'
 require 'thin'
+require 'puma'
 require 'haml'
 require 'iconv'
 require 'iso-639'
-require 'sinatra'
 require 'singleton'
 require 'bin_search'
 
-require 'rack/cache'
 require 'sinatra'
+require 'faraday'
+require 'rack/cache'
+require 'sinatra/json'
+require 'sinatra/namespace'
 
 module Titulator
 
