@@ -4,11 +4,6 @@ module Titulator
 
     use Rack::Cache
 
-    before do
-      content_type 'application/json'
-      cache_control :public, :max_age => 3600
-    end
-
     get '/movie_id' do
       fetch  = Fetch.new
       id     = fetch.imdb_movie_id(params['q'])
@@ -18,6 +13,10 @@ module Titulator
     end
 
     get '/subtitles/:lang/:imdb_id' do |lang, imdb_id|
+      content_type (if html = (request.content_type == 'text/html')
+        then 'text/html'
+        else 'application/json' end)
+
       start   = params['start']
       stop    = params['stop']
       grep    = params['grep']
@@ -48,8 +47,8 @@ module Titulator
         merge[:num_quotes_found] = ranges.size
         ranges
       else
-        subs    = subs.select { |c| c.grep grep } if grep
-        subs    = subs.select { |c| c.match match } if match
+        subs = subs.select { |c| c.grep grep } if grep
+        subs = subs.select { |c| c.match match } if match
         merge[:num_quotes_found] = subs.size if grep || match
         subs
       end
@@ -57,7 +56,15 @@ module Titulator
       result = result[0..[result.size, limit].min] if limit > 0
       result = { result: result, title: movie.title }
       result.merge! merge
-      result.to_json
+
+      # TODO make beautiful
+      if html
+        '<html></html>'
+      else
+        cache_control :public, :max_age => 3600
+        status 2000
+        result.to_json
+      end
     end
   end
 

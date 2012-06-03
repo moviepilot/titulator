@@ -29,12 +29,15 @@ Gem::Specification.new do |s|
 
   s.add_runtime_dependency 'pry'
   s.add_runtime_dependency 'json'
+  s.add_runtime_dependency 'thin'
   s.add_runtime_dependency 'rdoc'
   s.add_runtime_dependency 'imdb'
   s.add_runtime_dependency 'osdb'
   s.add_runtime_dependency 'rack'
-  s.add_runtime_dependency 'rack-cache'
-  s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'iso-639'
+  s.add_runtime_dependency 'sinatra'
+  s.add_runtime_dependency 'sinatra'
+  s.add_runtime_dependency 'shotgun'
+  s.add_runtime_dependency 'rack-cache'
   s.add_runtime_dependency 'bin_search'
 end
