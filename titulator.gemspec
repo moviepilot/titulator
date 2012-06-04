@@ -19,8 +19,9 @@ Gem::Specification.new do |s|
   s.require_paths = ['lib']
 
   s.add_development_dependency 'rspec'
-  s.add_development_dependency 'simplecov'
   s.add_development_dependency 'yard'
+  s.add_development_dependency 'simplecov'
+
   s.add_development_dependency 'pry'
   s.add_development_dependency 'pry-doc'
   s.add_development_dependency 'pry-nav'
@@ -51,6 +52,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency 'iso-639'
   s.add_runtime_dependency 'sinatra'
   s.add_runtime_dependency 'faraday'
+  s.add_runtime_dependency 'typhoeus' if RUBY_ENGINE.to_sym != :jruby
   s.add_runtime_dependency 'rack-cache'
   s.add_runtime_dependency 'bin_search'
   s.add_runtime_dependency 'sinatra-contrib'

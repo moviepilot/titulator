@@ -7,29 +7,15 @@ rescue
   require 'json'
 end
 
-begin
-  require 'pry'
-  IRB = Pry
-rescue
-  nil
-end
-
-require 'rdoc'
+require 'yaml'
 require 'imdb'
 require 'osdb'
 require 'thin'
 require 'puma'
-require 'haml'
 require 'iconv'
 require 'iso-639'
 require 'singleton'
 require 'bin_search'
-
-require 'sinatra'
-require 'faraday'
-require 'rack/cache'
-require 'sinatra/json'
-require 'sinatra/namespace'
 
 module Titulator
 
@@ -38,7 +24,6 @@ module Titulator
     f << 'titulator/config'
     f << 'titulator/parse'
     f << 'titulator/fetch'
-    f << 'titulator/app'
     f
   end
 

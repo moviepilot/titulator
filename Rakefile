@@ -3,10 +3,13 @@ require 'bundler/gem_tasks'
 require 'rspec'
 require 'rspec/core/rake_task'
 
+require 'rdoc'
+
 require 'yard'
 require 'yard/rake/yardoc_task'
 
 require 'pry'
+IRB = Pry
 
 desc 'Run all rspecs'
 RSpec::Core::RakeTask.new(:spec) do |spec|
@@ -29,7 +32,7 @@ task :console do
   Bundler.require
 
   module Titulator
-    pry.binding
+    binding.pry
   end
 end
 

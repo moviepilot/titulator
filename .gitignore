@@ -4,4 +4,5 @@
 Gemfile.lock
 doc
 coverage
+cache
 pkg/*
